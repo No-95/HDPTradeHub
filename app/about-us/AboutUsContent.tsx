@@ -112,9 +112,8 @@ export default function AboutUsContent() {
         {/* ── Mission & Vision Section ── */}
         <section
           id="mission"
-          style={{ backgroundColor: sectionColor }}
+          style={{ backgroundColor: sectionColor, borderColor: `${textColor}15` }}
           className="relative py-24 px-6 sm:px-10 lg:px-16 border-t"
-          style={{ borderColor: `${textColor}15` }}
         >
           <div className="mx-auto max-w-[1600px]">
             {/* Label */}
@@ -190,9 +189,8 @@ export default function AboutUsContent() {
 
         {/* ── Core Values Section ── */}
         <section
-          style={{ backgroundColor: sectionColor }}
+          style={{ backgroundColor: sectionColor, borderColor: `${textColor}15` }}
           className="relative py-24 px-6 sm:px-10 lg:px-16 border-t"
-          style={{ borderColor: `${textColor}15` }}
         >
           <div className="mx-auto max-w-[1600px]">
             {/* Label */}
@@ -244,9 +242,8 @@ export default function AboutUsContent() {
 
         {/* ── Stats Section ── */}
         <section
-          style={{ backgroundColor: sectionColor }}
+          style={{ backgroundColor: sectionColor, borderColor: `${textColor}15` }}
           className="relative py-24 px-6 sm:px-10 lg:px-16 border-t"
-          style={{ borderColor: `${textColor}15` }}
         >
           <div className="mx-auto max-w-[1600px]">
             <motion.h2
@@ -286,9 +283,8 @@ export default function AboutUsContent() {
 
         {/* ── CTA Section ── */}
         <section
-          style={{ backgroundColor: sectionColor }}
+          style={{ backgroundColor: sectionColor, borderColor: `${textColor}15` }}
           className="relative py-24 px-6 sm:px-10 lg:px-16 border-t"
-          style={{ borderColor: `${textColor}15` }}
         >
           <div className="mx-auto max-w-[1200px] text-center">
             <motion.h2

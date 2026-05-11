@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Direct Google and others to your multilingual sitemap
+Sitemap: https://www.hdptradehub.com/sitemap.xml

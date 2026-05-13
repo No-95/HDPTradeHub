@@ -318,11 +318,26 @@ export default function FurnitureRegisterPage() {
 
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await fetch("/api/furniture-roadshow/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-    setIsSubmitting(false)
-    setIsSuccess(true)
+      if (!response.ok) {
+        throw new Error("Failed to submit registration")
+      }
+
+      setIsSubmitting(false)
+      setIsSuccess(true)
+    } catch (error) {
+      console.error("[v0] Error submitting registration:", error)
+      alert("Failed to submit registration. Please try again.")
+      setIsSubmitting(false)
+    }
   }
 
   const canProceedStep1 = formData.fullName && formData.email && formData.phone && formData.position

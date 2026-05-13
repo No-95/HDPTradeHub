@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import type React from "react"
 import { useRef, useState, useEffect } from "react"
@@ -65,9 +65,37 @@ export default function ContactContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    alert(t.contactFormSuccess)
+
+    const formElement = e.target as HTMLFormElement
+    const formData = new FormData(formElement)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          company: formData.get('company'),
+          subject: formData.get('subject'),
+          message: formData.get('message'),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
+      }
+
+      alert(t.contactFormSuccess)
+      formElement.reset()
+    } catch (error) {
+      console.error('[v0] Error submitting contact form:', error)
+      alert('Failed to submit form. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -146,6 +174,7 @@ export default function ContactContent() {
                       >
                         <input
                           type="text"
+                          name="name"
                           required
                           onFocus={() => setFocusedField("name")}
                           onBlur={() => setFocusedField(null)}
@@ -183,6 +212,7 @@ export default function ContactContent() {
                       >
                         <input
                           type="email"
+                          name="email"
                           required
                           onFocus={() => setFocusedField("email")}
                           onBlur={() => setFocusedField(null)}
@@ -220,6 +250,7 @@ export default function ContactContent() {
                     >
                       <input
                         type="text"
+                        name="company"
                         onFocus={() => setFocusedField("company")}
                         onBlur={() => setFocusedField(null)}
                         className="w-full px-4 py-3 transition-all rounded-sm"
@@ -254,6 +285,7 @@ export default function ContactContent() {
                       className="relative rounded-sm overflow-hidden"
                     >
                       <select
+                        name="subject"
                         required
                         onFocus={() => setFocusedField("subject")}
                         onBlur={() => setFocusedField(null)}
@@ -304,6 +336,7 @@ export default function ContactContent() {
                       className="relative rounded-sm overflow-hidden"
                     >
                       <textarea
+                        name="message"
                         required
                         onFocus={() => setFocusedField("message")}
                         onBlur={() => setFocusedField(null)}

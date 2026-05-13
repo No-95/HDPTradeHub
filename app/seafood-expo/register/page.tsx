@@ -16,9 +16,6 @@ import { Building2, User, Target, CheckCircle2, ArrowLeft } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
 import { translations } from "@/lib/translations"
 
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyvVsN1bSTwpY5mTBpqH20OHF2GR0T97Gm-HMW82Re_AgyZ74dQ1781LKADktdt50wAvg/exec"
-
 export default function RegisterPage() {
   const { lang } = useLanguage()
   const t = translations[lang]
@@ -88,38 +85,38 @@ export default function RegisterPage() {
 
     setIsSubmitting(true)
 
-    const formData = new URLSearchParams()
-    formData.append("companyName", companyName)
-    formData.append("businessField", businessField)
-    formData.append("mainProducts", mainProducts)
-    formData.append("currentMarkets", currentMarkets.join(", "))
-    formData.append("website", website)
-    formData.append("contactName", contactName)
-    formData.append("position", position)
-    formData.append("phone", phone)
-    formData.append("email", email)
-    formData.append("goals", goals.join(", "))
-    formData.append("exportReadiness", exportReadiness)
-    formData.append("interestedPackage", interestedPackage)
-    formData.append("expectedTiming", expectedTiming)
-    formData.append("expectations", expectations)
-    formData.append("submittedAt", new Date().toISOString())
-
     try {
-      await fetch(SCRIPT_URL, {
+      const response = await fetch("/api/seafood-expo/register", {
         method: "POST",
-        mode: "no-cors",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: formData.toString(),
+        body: JSON.stringify({
+          companyName,
+          businessField,
+          mainProducts,
+          currentMarkets: currentMarkets.join(", "),
+          website,
+          contactName,
+          position,
+          phone,
+          email,
+          goals: goals.join(", "),
+          exportReadiness,
+          interestedPackage,
+          expectedTiming,
+          expectations,
+        }),
       })
+
+      if (!response.ok) {
+        throw new Error("Failed to submit registration")
+      }
 
       setIsSuccess(true)
     } catch (error) {
-      console.error("Error submitting form:", error)
-      setIsSuccess(true)
-    } finally {
+      console.error("[v0] Error submitting registration:", error)
+      alert("Failed to submit registration. Please try again.")
       setIsSubmitting(false)
     }
   }

@@ -19,6 +19,13 @@ export default function ContactContent() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    subject: "",
+    message: "",
+  })
   const imageIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const heroImages = [
@@ -65,9 +72,38 @@ export default function ContactContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    alert(t.contactFormSuccess)
+
+    try {
+      const response = await fetch("/api/form-submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formType: "contact",
+          ...contactForm,
+          language: lang,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to submit contact form")
+      }
+
+      alert(t.contactFormSuccess)
+      setContactForm({
+        name: "",
+        email: "",
+        company: "",
+        subject: "",
+        message: "",
+      })
+    } catch (error) {
+      console.error("Error submitting contact form:", error)
+      alert("Unable to send your message right now. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -147,6 +183,8 @@ export default function ContactContent() {
                         <input
                           type="text"
                           required
+                          value={contactForm.name}
+                          onChange={(e) => setContactForm((prev) => ({ ...prev, name: e.target.value }))}
                           onFocus={() => setFocusedField("name")}
                           onBlur={() => setFocusedField(null)}
                           className="w-full px-4 py-3 transition-all rounded-sm"
@@ -184,6 +222,8 @@ export default function ContactContent() {
                         <input
                           type="email"
                           required
+                          value={contactForm.email}
+                          onChange={(e) => setContactForm((prev) => ({ ...prev, email: e.target.value }))}
                           onFocus={() => setFocusedField("email")}
                           onBlur={() => setFocusedField(null)}
                           className="w-full px-4 py-3 transition-all rounded-sm"
@@ -220,6 +260,8 @@ export default function ContactContent() {
                     >
                       <input
                         type="text"
+                        value={contactForm.company}
+                        onChange={(e) => setContactForm((prev) => ({ ...prev, company: e.target.value }))}
                         onFocus={() => setFocusedField("company")}
                         onBlur={() => setFocusedField(null)}
                         className="w-full px-4 py-3 transition-all rounded-sm"
@@ -255,6 +297,8 @@ export default function ContactContent() {
                     >
                       <select
                         required
+                        value={contactForm.subject}
+                        onChange={(e) => setContactForm((prev) => ({ ...prev, subject: e.target.value }))}
                         onFocus={() => setFocusedField("subject")}
                         onBlur={() => setFocusedField(null)}
                         className="w-full px-4 py-3 transition-all rounded-sm appearance-none"
@@ -305,6 +349,8 @@ export default function ContactContent() {
                     >
                       <textarea
                         required
+                        value={contactForm.message}
+                        onChange={(e) => setContactForm((prev) => ({ ...prev, message: e.target.value }))}
                         onFocus={() => setFocusedField("message")}
                         onBlur={() => setFocusedField(null)}
                         rows={5}

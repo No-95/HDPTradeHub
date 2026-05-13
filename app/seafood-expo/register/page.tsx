@@ -86,37 +86,40 @@ export default function RegisterPage() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/seafood-expo/register", {
+      const response = await fetch("/api/form-submissions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          formType: "seafood",
           companyName,
           businessField,
           mainProducts,
-          currentMarkets: currentMarkets.join(", "),
+          currentMarkets,
           website,
           contactName,
           position,
           phone,
           email,
-          goals: goals.join(", "),
+          goals,
           exportReadiness,
           interestedPackage,
           expectedTiming,
           expectations,
+          language: lang,
         }),
       })
 
       if (!response.ok) {
-        throw new Error("Failed to submit registration")
+        throw new Error("Failed to submit seafood registration")
       }
 
       setIsSuccess(true)
     } catch (error) {
-      console.error("[v0] Error submitting registration:", error)
-      alert("Failed to submit registration. Please try again.")
+      console.error("Error submitting form:", error)
+      alert("Unable to submit your registration right now. Please try again.")
+    } finally {
       setIsSubmitting(false)
     }
   }

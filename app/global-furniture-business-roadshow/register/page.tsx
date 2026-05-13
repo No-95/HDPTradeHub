@@ -319,23 +319,27 @@ export default function FurnitureRegisterPage() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch("/api/furniture-roadshow/register", {
+      const response = await fetch("/api/form-submissions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          formType: "roadshow",
+          ...formData,
+          language: lang,
+        }),
       })
 
       if (!response.ok) {
-        throw new Error("Failed to submit registration")
+        throw new Error("Failed to submit roadshow registration")
       }
 
-      setIsSubmitting(false)
       setIsSuccess(true)
     } catch (error) {
-      console.error("[v0] Error submitting registration:", error)
-      alert("Failed to submit registration. Please try again.")
+      console.error("Error submitting roadshow form:", error)
+      alert("Unable to submit your registration right now. Please try again.")
+    } finally {
       setIsSubmitting(false)
     }
   }

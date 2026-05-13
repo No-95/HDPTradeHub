@@ -1,10 +1,17 @@
 import { neon } from '@neondatabase/serverless'
 import { NextRequest, NextResponse } from 'next/server'
 
-const sql = neon(process.env.DATABASE_URL!)
-
 export async function POST(request: NextRequest) {
   try {
+    const databaseUrl = process.env.DATABASE_URL
+    if (!databaseUrl) {
+      return NextResponse.json(
+        { error: 'Database connection not configured' },
+        { status: 500 }
+      )
+    }
+
+    const sql = neon(databaseUrl)
     const body = await request.json()
 
     const { name, email, company, subject, message } = body

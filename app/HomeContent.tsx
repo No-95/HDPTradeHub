@@ -7,7 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { useScroll, useTransform, motion, useInView, AnimatePresence } from "framer-motion"
 import { useLanguage } from "@/lib/language-context"
 import { translations } from "@/lib/translations"
@@ -110,7 +110,7 @@ const aboutSlideshowImages = [
   },
 ]
 
-const newsItems = [
+const allNewsItems = [
   {
     id: "news-1",
     date: "08 May 2026",
@@ -118,28 +118,38 @@ const newsItems = [
     title: "HDP Holdings Leads Vietnam-Korea Aerospace Supply Chain Mission",
     excerpt:
       "A high-level delegation of Vietnamese manufacturing enterprises visited Seoul to explore integration opportunities within Korea's aerospace supply chain ecosystem.",
-    image: "/images/airport-aviation-cooperation.jpg",
-    href: "/coming-soon",
+    image: "/Articles/1.png",
+    href: "/news/vietnam-korea-aerospace-supply-chain",
   },
   {
     id: "news-2",
-    date: "15 Apr 2026",
-    category: "Seafood Export",
-    title: "Vietnam Seafood Expo 2026: Record Buyer Attendance Expected",
+    date: "04 Oct 2025",
+    category: "Policy Forum",
+    title: "HDP Holdings Leadership Joins National Science and Technology Policy Forum",
     excerpt:
-      "The upcoming Seafood Export Gateway Program is set to attract over 200 international buyers from 30 countries, marking a significant milestone for Vietnamese aquaculture.",
-    image: "/images/seafood-processing-facility.jpg",
-    href: "/seafood-expo",
+      "HDP HOLDINGS participated in a policy dialogue at NIC with Deputy Prime Minister Nguyen Chi Dung and global Vietnamese experts.",
+    image: "/Articles/21.png",
+    href: "/news/hdp-holdings-dien-dan-chinh-sach-khoa-hoc-cong-nghe",
   },
   {
     id: "news-3",
-    date: "02 Mar 2026",
-    category: "Furniture & Wood",
-    title: "Global Furniture Business Roadshow Expands to Three New Markets",
+    date: "Jul 2024",
+    category: "Diplomatic Engagement",
+    title: "HDP Holdings CEO Attends PM Pham Minh Chinh Program in Korea",
     excerpt:
-      "HDP Holdings announces the expansion of its furniture trade promotion roadshow to Japan, Australia, and the UAE, connecting Vietnamese manufacturers with premium retail networks.",
-    image: "/images/expo-event-booth-presentation.jpg",
-    href: "/global-furniture-business-roadshow",
+      "HDP HOLDINGS CEO joined the Prime Minister's engagement with Vietnamese businesses and intellectuals in Korea.",
+    image: "/Articles/3.png",
+    href: "/news/ceo-hdp-holdings-gap-go-thu-tuong-pham-minh-chinh",
+  },
+  {
+    id: "news-4",
+    date: "13 May 2026",
+    category: "Aerospace Investment",
+    title: "HDP Holdings Promotes Korea-Vietnam Aerospace Investment Cooperation",
+    excerpt:
+      "HDP HOLDINGS organized an investment promotion and manufacturing assessment program in Vietnam for Korea's aerospace leadership delegation.",
+    image: "/Articles/41.png",
+    href: "/news/hdp-holdings-korea-vietnam-aerospace-investment-promotion",
   },
 ]
 
@@ -217,6 +227,17 @@ export default function HomePage() {
 
   const { lang } = useLanguage()
   const t = translations[lang]
+
+  const newsItems = useMemo(() => {
+    const shuffled = [...allNewsItems]
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = shuffled[i]
+      shuffled[i] = shuffled[j]
+      shuffled[j] = temp
+    }
+    return shuffled.slice(0, 3)
+  }, [])
 
   const aboutHeading = t.homeAboutHeading
   const aboutParagraphs = [
@@ -374,7 +395,7 @@ export default function HomePage() {
                 <h2
                   ref={aboutHeadingRef}
                   aria-label={aboutHeading}
-                  className="font-serif text-[2.2rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-5xl md:text-6xl lg:text-[5rem]"
+                  className="mx-auto max-w-[52ch] font-serif text-[1.65rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-4xl md:text-5xl lg:text-[3.75rem]"
                 >
                   {aboutHeading.split(" ").map((word, wordIndex) => (
                     <span key={`word-${wordIndex}`} className="mr-[0.22em] inline-flex overflow-hidden align-top">
@@ -440,9 +461,9 @@ export default function HomePage() {
 
 
               <div className="md:col-span-6 md:col-start-7 md:row-start-3 flex items-end">
-                <div className="space-y-9 text-[#232323]">
+                <div className="mx-auto max-w-[62ch] space-y-7 text-[#232323]">
                   {aboutParagraphs.map((paragraph, index) => (
-                    <p key={`about-paragraph-${index}`} className="text-base leading-[1.85] md:text-[1.05rem]">
+                    <p key={`about-paragraph-${index}`} className="text-base leading-[1.9] text-left md:text-justify md:text-[1.05rem]">
                       {paragraph}
                     </p>
                   ))}
@@ -668,7 +689,7 @@ export default function HomePage() {
                 transition={{ duration: 0.45, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               >
                 <a
-                  href="/coming-soon"
+                  href="/news"
                   className="group inline-flex items-center gap-2 text-sm font-medium text-[#141414] underline underline-offset-4 decoration-transparent hover:decoration-[#141414] transition-all duration-300"
                 >
                   {t.homeNewsViewAll}

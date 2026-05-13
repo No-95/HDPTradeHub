@@ -398,7 +398,7 @@ export default function ProcessSlider({
               <h2
                 ref={headingRef}
                 aria-label={displayHeading}
-                className="font-serif text-[2.2rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-5xl md:text-6xl lg:text-[5rem]"
+                className="mx-auto max-w-[52ch] font-serif text-[1.65rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-4xl md:text-5xl lg:text-[3.75rem]"
               >
                 {displayHeading.split(" ").map((word, wi) => (
                   <span key={`w-${wi}`} className="mr-[0.22em] inline-flex overflow-hidden align-top">

@@ -40,19 +40,16 @@ export default function Header() {
 
   const defaultMenuItems = [
     { label: t.aboutUs, href: "/about-us", external: false },
+    { label: "News", href: "/news", external: false },
     { label: t.contact, href: "/contact", external: false },
     { label: t.marketInsight || "Market Insight", href: "/market-insight", external: false },
     { label: t.businessOpportunity || "Cơ Hội Hợp Tác", href: "/business-opportunity", external: false },
-    {
-      label: t.visitHDPHoldings || "Visit HDPHoldings",
-      href: "https://hdpholdings.com.vn",
-      external: true,
-    },
   ]
 
   const seafoodExpoMenuItems = [
     { label: t.home, href: "/", external: false },
     { label: t.aboutUs, href: "/about-us", external: false },
+    { label: "News", href: "/news", external: false },
     { label: t.contact, href: "/contact", external: false },
     { label: t.marketInsight || "Market Insight", href: "/market-insight", external: false },
     { label: t.businessOpportunity || "Cơ Hội Hợp Tác", href: "/business-opportunity", external: false },
@@ -61,6 +58,7 @@ export default function Header() {
   const kofurnMenuItems = [
     { label: t.home, href: "/", external: false },
     { label: t.aboutUs, href: "/about-us", external: false },
+    { label: "News", href: "/news", external: false },
     { label: t.contact, href: "/contact", external: false },
     { label: t.marketInsight || "Market Insight", href: "/market-insight", external: false },
     { label: t.businessOpportunity || "Cơ Hội Hợp Tác", href: "/business-opportunity", external: false },

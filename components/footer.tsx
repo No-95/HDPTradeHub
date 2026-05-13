@@ -43,7 +43,7 @@ export default function Footer() {
           <h2
             ref={headingRef}
             aria-label={heading}
-            className="mb-14 font-serif text-[2.2rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-5xl md:text-6xl lg:text-[4.5rem]"
+            className="mb-14 font-serif text-[1.65rem] leading-[1.25] tracking-[-0.02em] text-[#141414] sm:text-4xl md:text-5xl lg:text-[3.375rem]"
           >
             {heading.split(" ").map((word, wi) => (
               <span key={wi} className="mr-[0.22em] inline-flex overflow-hidden align-top">
@@ -146,7 +146,7 @@ export default function Footer() {
             <div className="flex items-center gap-6">
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/feed/"
+                href="https://www.linkedin.com/in/hdp-holdings-co-ltd-77a630190/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"

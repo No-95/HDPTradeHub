@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import type React from "react"
 import { useRef, useState, useEffect } from "react"
@@ -182,6 +182,7 @@ export default function ContactContent() {
                       >
                         <input
                           type="text"
+                          name="name"
                           required
                           value={contactForm.name}
                           onChange={(e) => setContactForm((prev) => ({ ...prev, name: e.target.value }))}
@@ -221,6 +222,7 @@ export default function ContactContent() {
                       >
                         <input
                           type="email"
+                          name="email"
                           required
                           value={contactForm.email}
                           onChange={(e) => setContactForm((prev) => ({ ...prev, email: e.target.value }))}
@@ -296,6 +298,7 @@ export default function ContactContent() {
                       className="relative rounded-sm overflow-hidden"
                     >
                       <select
+                        name="subject"
                         required
                         value={contactForm.subject}
                         onChange={(e) => setContactForm((prev) => ({ ...prev, subject: e.target.value }))}
@@ -348,6 +351,7 @@ export default function ContactContent() {
                       className="relative rounded-sm overflow-hidden"
                     >
                       <textarea
+                        name="message"
                         required
                         value={contactForm.message}
                         onChange={(e) => setContactForm((prev) => ({ ...prev, message: e.target.value }))}
